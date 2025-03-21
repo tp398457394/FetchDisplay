@@ -5,5 +5,6 @@ import com.fetch.fetchdisplay.domain.entity.Item
 data class UiState(
     val isLoading: Boolean = true,
     val hasError: Boolean = false,
-    val items: List<Item> = emptyList()
+    val items: List<Item> = emptyList(),
+    val groupedItems: Map<Int, List<Item>> = emptyMap<Int, List<Item>>()
 )

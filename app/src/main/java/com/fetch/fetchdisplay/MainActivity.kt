@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fetch.fetchdisplay.ui.state.UiState
 import com.fetch.fetchdisplay.ui.theme.FetchDisplayTheme
 import com.fetch.fetchdisplay.viewmodel.ItemsViewModel
 import kotlinx.coroutines.launch
@@ -62,32 +64,40 @@ class MainActivity : ComponentActivity() {
                             Text("Encountered error...")
                         }
 
-                        else -> {
-                            LazyColumn(
-                                modifier = Modifier.padding(innerPadding)
-                            ) {
-                                val items = uiState.items
-                                items(count = items.size, key = { items[it].id }) { idx ->
-                                    Card(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(12.dp),
-                                        shape = RoundedCornerShape(8.dp)
-                                    ) {
-                                        val curItem = items[idx]
-                                        Row(
-                                            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp),
-                                            verticalAlignment = Alignment.CenterVertically,
-                                            horizontalArrangement = Arrangement.spacedBy(12.dp)
-                                        ) {
-                                            Text(text = curItem.id.toString())
-                                            Text(text = curItem.listId.toString())
-                                            Text(text = curItem.name)
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        else -> FetchDisplayList(innerPadding, uiState)
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun FetchDisplayList(
+        innerPadding: PaddingValues,
+        uiState: UiState
+    ) {
+        LazyColumn(
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            val items = uiState.items
+            items(count = items.size, key = { items[it].id }) { idx ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    val curItem = items[idx]
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Text(text = curItem.listId.toString())
+                        Text(text = curItem.name)
+                        Text(text = curItem.id.toString())
                     }
                 }
             }

@@ -2,6 +2,7 @@ package com.fetch.fetchdisplay.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fetch.fetchdisplay.domain.entity.Item
 import com.fetch.fetchdisplay.domain.repository.ItemRepository
 import com.fetch.fetchdisplay.ui.state.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,10 +28,19 @@ class ItemsViewModel(
                 }
             }
             .collectLatest { items ->
+                val sortedItemList = items.itemList
+                    .sortedWith(
+                        compareBy<Item> { it.listId }
+                            .thenBy {
+                                it.name.substringAfter("Item ").toIntOrNull() ?: Int.MAX_VALUE
+                            }
+                    )
+                    .filter { it.name.isNotBlank() }
                 uiState.update { curUiState ->
                     curUiState.copy(
                         isLoading = false,
-                        items = items.itemList
+                        items = sortedItemList,
+                        groupedItems = sortedItemList.groupBy { it.listId }
                     )
                 }
             }
