@@ -1,7 +1,7 @@
 package com.fetch.fetchdisplay.domain.entity
 
 data class Items(
-    val items: List<Item> = emptyList()
+    val itemList: List<Item> = emptyList()
 )
 
 data class Item(

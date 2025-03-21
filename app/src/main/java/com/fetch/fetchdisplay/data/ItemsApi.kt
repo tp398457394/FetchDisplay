@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface ItemsApi {
     @GET("/hiring.json")
-    suspend fun getAllItems(): ItemsDTO
+    suspend fun getAllItems(): List<ItemDTO>?
 }
