@@ -39,7 +39,6 @@ class ItemsViewModel(
                 uiState.update { curUiState ->
                     curUiState.copy(
                         isLoading = false,
-                        items = sortedItemList,
                         groupedItems = sortedItemList.groupBy { it.listId }
                     )
                 }
