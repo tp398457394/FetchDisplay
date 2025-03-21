@@ -1,4 +1,4 @@
-package com.fetch.myapplication
+package com.fetch.fetchdisplay
 
 import org.junit.Test
 
