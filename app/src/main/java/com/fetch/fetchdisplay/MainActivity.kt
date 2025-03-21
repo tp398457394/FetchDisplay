@@ -74,11 +74,15 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     when {
                         uiState.isLoading -> {
-                            Text("Loading...")
+                            Column(modifier = Modifier.padding(innerPadding)) {
+                                Text(text = "Loading...", modifier = Modifier.padding(16.dp))
+                            }
                         }
 
                         uiState.hasError -> {
-                            Text("Encountered error...")
+                            Column(modifier = Modifier.padding(innerPadding)) {
+                                Text(text = "Encountered error...", modifier = Modifier.padding(16.dp))
+                            }
                         }
 
                         else -> FetchDisplayList(innerPadding, uiState)
